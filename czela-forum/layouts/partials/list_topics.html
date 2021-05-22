@@ -1,0 +1,39 @@
+{{ $topics :=(where .Pages ".Params.folder_type" "topic") }}
+{{ if (gt (len $topics) 0) }}
+{{ $paginator := .Paginate $topics }}
+{{ template "topic_paginator.html" . }}
+<div class="forumbg">
+    <div class="inner"><span class="corners-top"><span></span></span>
+        <ul class="topiclist">
+            <li class="header">
+                <dl class="icon">
+                    <dt>Témata</dt>
+                    <dd class="posts">Odpovědi</dd>
+                    <dd class="views">Zobrazení</dd>
+                    <dd class="lastpost"><span>Poslední příspěvek</span></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="topiclist topics">
+
+            {{ range $i,$p := $paginator.Pages }}
+            {{ $odd := (add (mod $i 2) 1)}}
+            <li class="row bg{{$odd}}">
+                <dl class="icon" style="background-image: url(/styles/czela/imageset/topic_read.gif); background-repeat: no-repeat;">
+                    <dt title="Žádné nové příspěvky"><a href="{{ $p.RelPermalink }}" class="topictitle">{{ $p.Title }}</a>
+                    <br>od <a href="#" style="color: #CC0033;" class="username-coloured">{{ $p.Params.author }}</a> » {{ dateFormat "Mon, Jan 2 2006" $p.Params.date }}
+                    </dt>
+                    <dd class="posts">{{ $p.Params.topic_posts }} <dfn>Odpovědi</dfn></dd>
+                    <dd class="views">{{ $p.Params.topic_visits }} <dfn>Zobrazení</dfn></dd>
+                    <dd class="lastpost"><span>od <a href="#" style="color: #CC0033;" class="username-coloured">{{ $p.Params.author }}</a>
+                        <a href="#"><img src="/styles/czela/imageset/icon_topic_latest.gif" alt="Zobrazit poslední příspěvek" title="Zobrazit poslední příspěvek" width="11" height="9"></a> <br>{{ dateFormat "Mon, Jan 2 2006" $p.Params.date }}</span>
+                    </dd>
+                </dl>
+            </li>
+            {{ end }}
+        </ul>
+
+        <span class="corners-bottom"><span></span></span>
+    </div>
+</div>
+{{ end }}

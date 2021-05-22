@@ -1,0 +1,9 @@
+parent=`cat /proc/$PPID/cmdline`
+
+if [ "x$parent" = "xmc" ] ; then 
+    echo "Exit mc first!!!"
+    exit 1
+fi
+
+#cd ~/projects/code/ ; 
+tmux new-session -d -n 'server' ./hugo_server.sh \; new-window -n 'editor' mc \; attach

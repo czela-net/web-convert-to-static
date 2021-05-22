@@ -1,0 +1,41 @@
+{{ $forums :=(where .Pages ".Params.folder_type" "forum") }}
+{{ if (gt (len $forums) 0) }}
+<div class="forabg">
+    <div class="inner"><span class="corners-top"><span></span></span>
+        <ul class="topiclist">
+            <li class="header">
+                <dl class="icon">
+                    <dt>Fórum</dt>
+                    <dd class="topics">Témata</dd>
+                    <dd class="posts">Příspěvky</dd>
+                    <dd class="lastpost"><span>Poslední příspěvek</span></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="topiclist forums">
+            {{ range $i,$p := $forums }}
+            <li class="row">
+                <dl class="icon" style="background-image: url(/styles/czela/imageset/forum_read_subforum.gif); background-repeat: no-repeat;">
+                    <dt title="Žádné nové příspěvky">
+                    <span class="forum-image"><img src="{{ default "/images/categories/otazky.png" $p.Params.forum_image}}" alt="Žádné nové příspěvky"></span>
+                    <a href="{{ $p.RelPermalink }}" class="forumtitle">{{ $p.Title }}</a><br>
+                    {{ $p.Params.forum_desc }}
+
+                    </dt>
+
+                    <dd class="topics">{{ $p.Params.forum_topics }} <dfn>Témata</dfn></dd>
+                    <dd class="posts">{{ $p.Params.forum_posts }} <dfn>Příspěvky</dfn></dd>
+                    <dd class="lastpost"><span>
+                        <dfn>Poslední příspěvek</dfn> od <a href="#" style="color: #009900;" class="username-coloured">{{ $p.Params.author }}</a>
+                        <a href="__post"><img src="/styles/czela/imageset/icon_topic_latest.gif" alt="Zobrazit poslední příspěvek" title="Zobrazit poslední příspěvek" width="11" height="9"></a> 
+                        <br>{{ dateFormat "Mon, Jan 2 2006" $p.Params.date }} </span>
+                    </dd>
+
+                </dl>
+            </li>
+            {{ end }}
+        </ul>
+
+        <span class="corners-bottom"><span></span></span></div>
+</div>
+{{ end }}

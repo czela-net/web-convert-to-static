@@ -1,0 +1,42 @@
+<!-- BEGIN announcements_center_row -->
+<!-- IF announcements_center_row.S_FIRST_ROW -->
+{$C_BLOCK_H_L}{$TITLE}{$C_BLOCK_H_R}
+<!-- ENDIF -->
+<!-- IF $S_POSTBODY_TOP --><div class="postbody" style="width: 100%"><!-- ENDIF -->
+	<!-- IF announcements_center_row.S_NO_TOPICS  -->
+	<div class="post bg2" style="margin-bottom: 0px">
+		<div class="inner"><span class="portal-corners-top-inner"></span>
+			<span style="text-align: center;"><strong>{L_NO_ANNOUNCEMENTS}</strong></span>
+	<!-- ELSE -->
+	<div style="margin-bottom: <!-- IF announcements_center_row.S_LAST_ROW -->0px<!-- ELSE -->1px<!-- ENDIF -->" class="post <!-- IF announcements_center_row.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
+		<div class="inner"><span class="portal-corners-top-inner"></span>
+			<h4 class="first"><strong>{announcements_center_row.TITLE}</strong></h4> {announcements_center_row.TIME}
+			<!-- IF announcements_center_row.PAGINATION --><strong class="pagination"><span>{announcements_center_row.PAGINATION}</span></strong><!-- ENDIF -->
+			<!-- IF not $S_POSTBODY_TOP --><div class="postbody" style="width: 100%"><!-- ENDIF -->
+				<div class="content">
+					<br />{announcements_center_row.TEXT}
+				</div>
+			<!-- IF announcements_center_row.S_HAS_ATTACHMENTS -->
+			<dl class="attachbox">
+				<dt>{L_ATTACHMENTS}</dt>
+				<!-- BEGIN attachment -->
+					<dd>{announcements_center_row.attachment.DISPLAY_ATTACHMENT}</dd>
+				<!-- END attachment -->
+			</dl>
+			<!-- ENDIF -->
+			<!-- IF announcements_center_row.S_LAST_ROW and (AP_PAGINATION or TOTAL_ANNOUNCEMENTS) -->
+				<hr class="dashed" />
+				<div class="pagination">
+					{TOTAL_ANNOUNCEMENTS}
+				<!-- IF AP_PAGE_NUMBER --><!-- IF AP_PAGINATION --> &bull; {AP_PAGE_NUMBER} &bull; <span>{AP_PAGINATION}</span><!-- ELSE --> &bull; {AP_PAGE_NUMBER}<!-- ENDIF --><!-- ENDIF -->
+				</div>
+			<!-- ENDIF -->
+		<!-- IF not $S_POSTBODY_TOP --></div><!-- ENDIF -->
+		<!-- ENDIF -->
+		<span class="portal-corners-bottom-inner"></span></div>
+	</div>
+<!-- IF $S_POSTBODY_TOP --></div><!-- ENDIF -->
+<!-- IF announcements_center_row.S_LAST_ROW -->
+{$C_BLOCK_F_L}{$C_BLOCK_F_R}
+<!-- ENDIF -->
+<!-- END announcements_center_row -->

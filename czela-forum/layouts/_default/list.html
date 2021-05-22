@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" xml:lang="cs-cz" class="idc0_330" lang="cs-cz">
+    {{ partial "html_head" . }}
+
+    <body id="phpbb" class="section-viewtopic ltr">
+    {{ partial "body_header" . }}
+
+        <div id="page-body" class="content-wrap">
+            <h2><a href="{{ .RelPermalink }}"> {{ .Title }}</a></h2>
+            <ol  class="nav navbar-nav">
+                  {{ template "breadcrumbnav" (dict "p1" . "p2" . ) }}
+            </ol>
+            {{ define "breadcrumbnav" }}
+            {{ if .p1.Parent }}
+            {{ template "breadcrumbnav" (dict "p1" .p1.Parent "p2" .p2 )  }}
+            {{ else if not .p1.IsHome }}
+            {{ template "breadcrumbnav" (dict "p1" .p1.Site.Home "p2" .p2 )  }}
+            {{ end }}
+            <a href="{{ .p1.Permalink }}">{{ .p1.Title }}</a>
+            {{ if ne .p1 .p2 }} / {{ end }}
+            {{ end }}
+
+            {{ partial "list_forums" . }}
+
+            {{ partial "list_topics" . }}
+
+            {{ partial "list_posts" . }}
+        </div>
+
+    {{ partial "body_footer" . }}
+    </body>
+</html>

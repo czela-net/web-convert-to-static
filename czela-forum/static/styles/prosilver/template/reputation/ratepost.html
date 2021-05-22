@@ -1,0 +1,58 @@
+<form>
+<div class="panel">
+	<div class="inner"><span class="corners-top"><span></span></span>
+
+	<fieldset>
+		<!-- IF S_RS_POWER_ENABLE -->
+		<!-- IF RS_POWER_POINTS_LEFT -->
+		<div style="margin-bottom:10px ;text-align: center">
+			<div class="progress-bar">
+				<div class="empty-progress" style="width:{RS_POWER_PROGRESS_EMPTY}%"></div>
+			</div>
+			<span>{RS_POWER_POINTS_LEFT}</span><br/>
+		</div>
+		<!-- ENDIF -->
+		<!-- IF .reputation > 0 -->
+		<dl>
+			<dt><label>{L_RS_POINTS}</label></dt>
+			<dd><select name="rep_power" id="rep_power">
+				<!-- BEGIN reputation -->
+					{reputation.REPUTATION_POWER}
+				<!-- END reputation -->
+				</select></dd>
+		</dl>
+		<!-- ENDIF -->
+		<!-- ENDIF -->
+		<!-- IF S_RS_COMMENT_ENABLE -->
+		<dl class="comment">
+			<dt><label>{L_RS_COMMENT}</label></dt>
+			<textarea name="comment" id="comment" class="inputbox" cols="40" rows="3" style="width: 99%;"></textarea>
+		</dl>
+		<!-- ENDIF -->
+		<!-- IF S_RS_PM_NOTIFY -->
+		<dl>
+			<label><input type="checkbox" name="notify_user" /> {L_NOTIFY_USER_REP}</label>
+		</dl>
+		<!-- ENDIF -->
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		{S_HIDDEN_FIELDS}
+		<input type="hidden" name="rate" value="1" />
+		<input type="submit" name="submit" value="{L_RS_RATE_BUTTON}" class="button2" onclick="jRS.ratepost('{POST_ID}'); return false;" />&nbsp;
+		<input type="submit" name="cancel" value="{L_CANCEL}" class="button2" onclick="$('#reputation-popup').fadeOut('fast'); return false;" />
+	</fieldset>
+
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+</form>
+
+<script type="text/javascript">
+// <![CDATA[
+	var commenton = '{S_RS_COMMENT_ENABLE}';
+	var commentreq = '{S_RS_COMMENT_REQ}';
+	var nocomment = '{L_RS_NO_COMMENT}';
+	var commentlen = '{RS_COMMENT_TOO_LONG}';
+	var toolongcomment = '{S_RS_COMMENT_TOO_LONG}';
+// ]]>
+</script>

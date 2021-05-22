@@ -1,0 +1,57 @@
+#act_indicator {
+	visibility:hidden;
+}
+
+.shouts {
+	width: 85%;
+	height:300px;
+	overflow:auto;
+	float:left;
+}
+
+#chat {
+	width: 100%;
+	text-align:left;
+}
+
+.postprofile {
+	min-height: 5px !important;
+}
+
+.chatform {
+	width: 90%;
+	text-align:center;
+}
+
+.onlinelist {
+	width: 15%;
+	overflow:auto;
+	height:300px;
+}
+
+.users {
+	width: 90%;
+	text-align: left;
+	text-indent: 5px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.user {
+	width: 95%;
+	font-size: 1.1em;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	line-height: 1.4em;
+}
+
+#act_indicator {
+	visibility: hidden;
+}
+
+.chatinput {
+	width: 80% !important;
+}
+
+.online_img {
+	vertical-align:middle;
+}

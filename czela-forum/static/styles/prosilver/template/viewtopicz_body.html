@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+<!-- BEGIN postrow -->
+<row>
+	<post_id>{postrow.POST_ID}</post_id>
+	<!-- IF postrow.S_UNREAD_POST --><post_unread> unreadpost</post_unread><!-- ENDIF -->
+	<!-- IF postrow.S_POST_REPORTED --><post_reported>reported</post_reported><!-- ENDIF -->
+        <!-- IF postrow.S_ONLINE and not postrow.S_IGNORE_POST --><post_online>online</post_online><!-- ENDIF -->
+		<!-- IF S_REPUTATION -->
+	<!-- IF postrow.S_RS_POST_HIGHLIGHT --><post_highlight>highlight</post_highlight><!-- ENDIF -->
+	<!-- IF postrow.S_RS_HIDE_POST --><post_hidden>hidden</post_hidden><!-- ENDIF -->
+		<!-- ENDIF -->
+	<post_hidepost>{postrow.L_RS_HIDE_POST}</post_hidepost>
+	<!-- IF postrow.S_IGNORE_POST --><post_ignore>{postrow.L_IGNORE_POST}</post_ignore><!-- ELSE -->
+		<!-- IF postrow.S_FIRST_ROW --><post_firstrow>first</post_firstrow><!-- ENDIF -->
+		<!-- IF postrow.POST_ICON_IMG --><post_icon>
+			<img_path>{T_ICONS_PATH}</img_path>
+			<img_img>{postrow.POST_ICON_IMG}</img_img>
+			<img_width>{postrow.POST_ICON_IMG_WIDTH}</img_width>
+			<img_height>{postrow.POST_ICON_IMG_HEIGHT}</img_height>
+		</post_icon><!-- ENDIF -->
+		<post_subject><![CDATA[{postrow.POST_SUBJECT}]]></post_subject>
+		<!-- IF S_IS_BOT --><author_is_bot>{postrow.MINI_POST_IMG}</author_is_bot><!-- ELSE -->
+			<user_post_mini>{postrow.U_MINI_POST}</user_post_mini>
+			<user_post_img>{postrow.MINI_POST_IMG}</user_post_img><!-- ENDIF -->
+		<user_login>{L_POST_BY_AUTHOR}</user_login>
+		<user_fullname>{postrow.POST_AUTHOR_FULL}</user_fullname>
+		<post_date>{postrow.POST_DATE}</post_date>
+		<post_message><![CDATA[ {postrow.MESSAGE} ]]></post_message>
+		<!-- IF postrow.RS_POST_CLASS --><post_class>{postrow.RS_POST_CLASS}</post_class><!-- ENDIF -->
+		<post_rs_reputation>{L_RS_POST_REPUTATION}</post_rs_reputation>
+		<post_reputation>{postrow.POST_REPUTATION}</post_reputation>
+	<!-- ENDIF -->
+	<!-- IF postrow.S_HAS_ATTACHMENTS -->
+		<l_attachments>{L_ATTACHMENTS}</l_attachments>
+		<!-- BEGIN attachment --> <d_attachment>{postrow.attachment.DISPLAY_ATTACHMENT}</d_attachment> <!-- END attachment -->
+	<!-- ENDIF -->
+
+	<!-- IF postrow.S_DISPLAY_NOTICE --><d_notice>{L_DOWNLOAD_NOTICE}</d_notice><!-- ENDIF -->
+	<!-- IF postrow.EDITED_MESSAGE or postrow.EDIT_REASON -->
+		<edited_message>{postrow.EDITED_MESSAGE}</edited_message>
+		<!-- IF postrow.EDIT_REASON -->
+			<edited_l_reason>{L_REASON}</edited_l_reason>
+			<edited_reason>{postrow.EDIT_REASON}</edited_reason>
+		<!-- ENDIF -->
+	<!-- ENDIF -->
+
+	<!-- IF postrow.BUMPED_MESSAGE --><bumped_message>{postrow.BUMPED_MESSAGE}</bumped_message><!-- ENDIF -->
+	<!-- IF postrow.SIGNATURE --><signature>{postrow.SIGNATURE}</signature><!-- ENDIF -->
+
+	<!-- IF not postrow.S_IGNORE_POST -->
+	<!-- IF postrow.POSTER_AVATAR -->
+		<!-- IF postrow.U_POST_AUTHOR --><user_author>"{postrow.U_POST_AUTHOR}</user_author><!-- ENDIF -->
+		<user_avatar>{postrow.POSTER_AVATAR}</user_avatar>
+	<!-- ENDIF -->
+
+	<!-- IF postrow.RANK_TITLE or postrow.RANK_IMG --><rank_title>{postrow.RANK_TITLE}</rank_title>
+		<rank_img>{postrow.RANK_IMG}</rank_img><!-- ENDIF -->
+
+		<!-- IF postrow.POSTER_POSTS != '' --><l_posts>{L_POSTS}</l_posts> <poster_posts>{postrow.POSTER_POSTS}</poster_posts><!-- ENDIF -->
+		<!-- IF postrow.POSTER_JOINED --><l_joined>{L_JOINED}:</l_joined> <poster_joined>{postrow.POSTER_JOINED}</poster_joined><!-- ENDIF -->
+		<!-- IF postrow.POSTER_FROM --><l_location>{L_LOCATION}:</l_location> <poster_from>{postrow.POSTER_FROM}</poster_from><!-- ENDIF -->
+		<!-- IF S_REPUTATION and postrow.U_POST_AUTHOR -->
+			<u_reputation>{postrow.U_REPUTATION}</u_reputation>
+			<!-- IF postrow.RS_RANK_IMG --><rs_rank_img>{postrow.RS_RANK_IMG}</rs_rank_img><!-- ENDIF -->
+		<!-- ENDIF -->
+
+		<!-- IF postrow.S_PROFILE_FIELD1 --> 
+			<pf_name>{postrow.PROFILE_FIELD1_NAME}:</pf_name>
+			<pf_value>{postrow.PROFILE_FIELD1_VALUE}</pf_value>
+		<!-- ENDIF -->
+
+		<!-- BEGIN custom_fields -->
+			<cf_name>{postrow.custom_fields.PROFILE_FIELD_NAME}</cf_name>
+			<cf_value>{postrow.custom_fields.PROFILE_FIELD_VALUE}</cf_value>
+		<!-- END custom_fields -->
+	<!-- ENDIF -->
+</row>
+<!-- END postrow -->
+</data>

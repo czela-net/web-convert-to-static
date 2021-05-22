@@ -1,0 +1,12 @@
+{{ if ( eq .Params.folder_type "topic") }}
+Clanky
+{{ $posts :=(where .Pages ".Params.folder_type" "post") }}
+{{ $paginator := .Paginate $posts }}
+{{ template "post_paginator.html" . }}
+
+            {{ range $i,$p := $paginator.Pages }}
+            {{ $odd := (add (mod $i 2) 1)}}
+            <li><a href="{{ $p.RelPermalink }}" class="posttitle">{{ $p.Title }}</a>
+            {{ end }}
+
+{{ end }}

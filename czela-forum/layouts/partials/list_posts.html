@@ -1,0 +1,58 @@
+{{ if ( eq .Params.folder_type "topic") }}
+<div class="topic-actions">
+{{ $paginator := .Paginate .Pages }}
+{{ template "topic_paginator.html" . }}
+</div>
+
+<div class="clear"></div>
+
+{{ range $i,$p := $paginator.Pages }}
+{{ $odd := (add (mod $i 2) 1)}}
+<div class="post bg{{ $odd }}">
+    <div class="inner"><span class="corners-top"><span></span></span>
+
+	<div class="postbody">
+
+            <h3 class="first"><a href="#p{{$p.Params.postId }}">{{ $p.Title }}</a></h3>
+            <p class="author"><a href="#"><img src="/styles/czela/imageset/icon_post_target.gif" alt="Příspěvek" title="Příspěvek" width="11" height="9"></a>od <strong><a href="#">{{ $p.Params.author }}</a></strong> » {{ dateFormat "Mon, Jan 2 2006" $p.Params.date }}</p>
+
+	    <div class="content">
+                {{ $p.Content }}
+            </div>
+
+	    <ul class="post-reputation">
+		<li class="rate-good-icon">
+		</li>
+                <li class="reputation"><div title="Reputace příspěvku">{{ $p.Params.postReputation }}</div></li>
+	    </ul>
+	    <br>
+	</div>
+
+	<dl class="postprofile">
+            <dt>
+            {{ if $p.Params.authorAvatar }} <a href="#"><img src="{{ $p.Params.authorAvatar }}" alt="Uživatelský avatar" width="64" height="64"></a><br> {{ end }}
+            <a href="#" style="color: #AA0000;" class="username-coloured">{{ $p.Params.author }}</a>
+            </dt>
+	    <dd>&nbsp;</dd>
+	    <dd><strong>Příspěvky:</strong> {{ $p.Params.authorPostsCounter }}</dd><dd><strong>Registrován:</strong> {{ dateFormat "Mon, Jan 2 2006" $p.Params.authorRegisteredFrom }}</dd>
+	    <dd class="user-reputation"><strong>Reputace:</strong> <strong>{{ $p.Params.authorReputation }}</strong></dd>
+	    <dd>
+	    <ul class="profile-icons">
+		<li class="pm-icon"><a href="#" title="Soukromá zpráva"><span>Soukromá zpráva</span></a></li>
+	    </ul>
+	    </dd>
+	</dl>
+
+
+	<div class="back2top"><a href="#wrap" class="top" title="Nahoru">Nahoru</a></div>
+
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+{{ end }}
+<hr class="divider">
+
+<div class="topic-actions">
+{{ template "topic_paginator.html" . }}
+</div>
+
+{{ end }}
