@@ -1,3 +1,4 @@
+*.properties
 00/
 czela-forum/static/download/
 out/
