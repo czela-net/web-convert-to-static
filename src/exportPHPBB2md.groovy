@@ -10,6 +10,8 @@ import net.czela.common.Helper
 
 import java.text.SimpleDateFormat
 
+import static net.czela.common.Helper.fmt6
+
 Sql sql = Helper.newSqlInstance("phpbb.properties", this)
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 sdf.setTimeZone(TimeZone.getTimeZone("CET"));
@@ -32,31 +34,23 @@ JOIN phpbb_users u ON u.user_id = p.poster_id"""
 
 sql.eachRow(query) { row ->
    def article = """---
-title: "$row.post_subject"
-author: "$row.username"
-postId: $row.post_id
-forumId : $row.forum_id 
-topicId : $row.topic_id 
-date: "${sdf.format(row.post_time)}"
-userId : $row.user_id 
-forumName: "$row.forum_name"
-topicTitle: "$row.topic_title"
+title: "$row.POST_SUBJECT"
+author: "$row.USERNAME"
+postId: $row.POST_ID
+forumId : $row.FORUM_ID 
+topicId : $row.TOPIC_ID 
+date: "${sdf.format(row.POST_TIME)}"
+userId : $row.USER_ID 
+forumName: "$row.FORUM_NAME"
+topicTitle: "$row.TOPIC_TITLE"
 draft: false
 ---
-$row.post_text
+$row.POST_TEXT
 """
-def dir = new File("contentA/forum_${fmt6(row.forum_id)}/topic_${fmt6(row.topic_id)}")
+def dir = new File("contentA/forum_${fmt6(row.FORUM_ID)}/topic_${fmt6(row.TOPIC_ID)}")
 if (! dir.exists()) dir.mkdirs()
-def file = new File(dir,"post_${fmt6(row.post_id)}.md")
+def file = new File(dir,"post_${fmt6(row.POST_ID)}.md")
 if (! file.exists()) file.delete()
 
 file << article
-}
-
-static def fmt6(def s) {
-    if (s == null) return ""
-    String ss = s.toString()
-    def l = ss.length()
-    if (l >= 6) return s
-    return "000000$ss".substring(l)
 }

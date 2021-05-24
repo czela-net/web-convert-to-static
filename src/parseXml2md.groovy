@@ -1,10 +1,15 @@
+import static net.czela.common.Helper.addAttr
+import static net.czela.common.Helper.fmt6
+import static net.czela.common.Helper.nvl
+import static net.czela.common.Helper.toTS
+
 def parser = new XmlSlurper()
 def contentDir = new File(args[0])
 
 findFiles(contentDir, parser)
 
 def findFiles (File dir, def parser) {
-	println(dir.absolutePath)
+	//println(dir.absolutePath)
 	for(File f in dir.listFiles()) {
 		if (f.directory) {
 			findFiles(f, parser)
@@ -49,17 +54,17 @@ def parseXml(File source, def parser) {
 			assert exitValue == 0
 			def md = new String(outFile.readBytes())
 			def markdown = """---
-title: "$postTitle"
-author: "$authorName"
-postId: "$postId"
-forumId: "$forumId"
-topicId: "$topicId"
-date: "$postDate"
-postReputation: "$postReputation"
-authorPostsCounter: "$authorPostsCounter"
-authorRegisteredFrom: "$authorRegisteredFrom"
-authorReputation: "$authorReputation"
-authorAvatar: "$authorAvatar"
+${addAttr('title', postTitle)}
+${addAttr('author', authorName)}
+${addAttr('postId', postId)}
+${addAttr('forumId', forumId)}
+${addAttr('topicId', topicId)}
+${addAttr('date', postDate)}
+${addAttr('postReputation', postReputation)}
+${addAttr('authorPostsCounter', authorPostsCounter)}
+${addAttr('authorRegisteredFrom', authorRegisteredFrom)}
+${addAttr('authorReputation', authorReputation)}
+${addAttr('authorAvatar', authorAvatar)}
 ---
 $md
 """
@@ -74,44 +79,3 @@ $md
 	}
 }
 
-def static nvl(def o, def d) {
-	o == null ? d : o
-}
-
-def static toTS(String date) {
-	def m = date =~ /(...) (\d\d)\. (...) (\d{4}) (\d{1,2}:\d{2}:\d{2})/
-	if (m.find()) {
-		def dow = m[0][1]
-		def day = m[0][2]
-		def mon = m[0][3]
-		def year = m[0][4]
-		def time = m[0][5]
-		switch (mon) {
-			case 'led': mon = '01'; break
-			case 'úno': mon = '02'; break
-			case 'bře': mon = '03'; break
-			case 'dub': mon = '04'; break
-			case 'kvě': mon = '05'; break
-			case 'čer': mon = '06'; break
-			case 'črc': mon = '07'; break
-			case 'srp': mon = '08'; break
-			case 'zář': mon = '09'; break
-			case 'říj': mon = '10'; break
-			case 'lis': mon = '11'; break
-			case 'pro': mon = '12'; break
-			default:
-				println("Unknown name $mon")
-		}
-		return "$year-$mon-${day}T$time"
-	//} else {
-	//	assert false, "Can not parse '$date'"
-	}
-}
-
-static def fmt6(def s) {
-    if (s == null) return ""
-    String ss = s.toString()
-    def l = ss.length()
-    if (l >= 6) return s
-    return "000000$ss".substring(l)
-}

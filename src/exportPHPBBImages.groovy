@@ -8,8 +8,6 @@
 import groovy.sql.Sql
 import net.czela.common.Helper
 
-import java.text.SimpleDateFormat
-
 Sql sql = Helper.newSqlInstance("phpbb.properties", this)
 
 def buf = ""

@@ -14,7 +14,7 @@
 	<div class="postbody">
 
             <h3 class="first"><a href="#p{{$p.Params.postId }}">{{ $p.Title }}</a></h3>
-            <p class="author"><a href="#"><img src="/styles/czela/imageset/icon_post_target.gif" alt="Příspěvek" title="Příspěvek" width="11" height="9"></a>od <strong><a href="#">{{ $p.Params.author }}</a></strong> » {{ dateFormat "Mon, Jan 2 2006" $p.Params.date }}</p>
+            <p class="author"><a href="#"><img src="/styles/czela/imageset/icon_post_target.gif" alt="Příspěvek" title="Příspěvek" width="11" height="9"></a>od <strong><a href="#">{{ $p.Params.author }}</a></strong> » {{ with $p.Params.date }} {{ dateFormat "Mon, Jan 2 2006" $p.Params.date }} {{ end }}</p>
 
 	    <div class="content">
                 {{ $p.Content }}
@@ -34,7 +34,8 @@
             <a href="#" style="color: #AA0000;" class="username-coloured">{{ $p.Params.author }}</a>
             </dt>
 	    <dd>&nbsp;</dd>
-	    <dd><strong>Příspěvky:</strong> {{ $p.Params.authorPostsCounter }}</dd><dd><strong>Registrován:</strong> {{ dateFormat "Mon, Jan 2 2006" $p.Params.authorRegisteredFrom }}</dd>
+            <dd><strong>Příspěvky:</strong> {{ $p.Params.authorPostsCounter }}</dd>
+            <dd><strong>Registrován:</strong>{{if (isset $p.Params "authorRegisteredFrom") }} {{ dateFormat "Mon, Jan 2 2006" $p.Params.authorRegisteredFrom }} {{ end }}</dd>
 	    <dd class="user-reputation"><strong>Reputace:</strong> <strong>{{ $p.Params.authorReputation }}</strong></dd>
 	    <dd>
 	    <ul class="profile-icons">
