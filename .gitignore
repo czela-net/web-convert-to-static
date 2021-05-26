@@ -1,4 +1,9 @@
+.idea/
 *.properties
 00/
 czela-forum/static/download/
 out/
+/exportPHPBB2md.sh
+/exportPHPBB2xml.sh
+/exportPHPBBImages.sh
+/exportPHPBBTopics2md.sh
