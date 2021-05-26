@@ -13,15 +13,20 @@
 import groovy.sql.Sql
 import net.czela.common.Helper
 
-import static net.czela.common.Helper.fmt6
+import java.nio.charset.StandardCharsets
 
+import static net.czela.common.Helper.fmt6
+import static net.czela.common.Helper.nvl
+
+
+String cookie = login()
 Sql sql = Helper.newSqlInstance("phpbb.properties", this)
 
 int cnt = 0;
 sql.eachRow("SELECT topic_id, forum_id, min(post_id) post_id FROM phpbb_posts group by topic_id, forum_id".toString()) { row ->
     try {
         String url = "https://www.czela.net/f/viewtopicz.php?f=${row.FORUM_ID}&t=${row.TOPIC_ID}&p=${row.POST_ID}"
-        def data = doGet(url)
+        def data = doGet(url, cookie)
 
         def dir = new File("contentB/forum_${fmt6(row.FORUM_ID)}")
         if (!dir.exists()) dir.mkdirs()
@@ -36,10 +41,53 @@ sql.eachRow("SELECT topic_id, forum_id, min(post_id) post_id FROM phpbb_posts gr
         print((cnt % 100 ==0)?"+":".")
     }
 }
-static String doGet (def url) {
+
+static String doGet (def url, def cookie) {
     def conn = new URL(url).openConnection()
     conn.setRequestProperty('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
-    conn.setRequestProperty('Cookie', 'phpbb3_h4ku8_u=2; phpbb3_h4ku8_k=; phpbb3_h4ku8_sid=9b63d0b983534b19e6e9303efe1f95f0; __tsid=70dd809c-3876-47fd-abc6-2540d6ce6203; style_cookie=null')
+    if (cookie != null) {
+        conn.setRequestProperty('Cookie', cookie)
+    }
     return conn.getInputStream().getText()
+}
+
+static Object login() {
+    CookieManager cookieManager = new CookieManager();
+    CookieHandler.setDefault(cookieManager);
+    cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+
+    String url = 'https://www.czela.net/f/ucp.php?mode=login'
+    String user = nvl(System.getenv('FORUM_USER'), 'anonymous')
+    String passwd = nvl(System.getenv('FORUM_PASSWD'), 'unknown')
+
+    HttpURLConnection conn = new URL(url).openConnection()
+    conn.setRequestMethod("GET")
+    conn.setRequestProperty('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
+    conn.setDoOutput(true)
+    def t = conn.getInputStream().getText()
+    def m = t =~ /<input type="hidden" name="sid" value="([^"]+)"/
+    def sid = m[0][1]
+
+    CookieStore cookieStore = cookieManager.getCookieStore();
+
+    conn = new URL(url).openConnection()
+    conn.setRequestMethod("POST")
+    conn.setRequestProperty('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
+    conn.setRequestProperty('Content-Type', 'application/x-www-form-urlencoded');
+    conn.setDoInput(true)
+    conn.setDoOutput(true)
+    def message = "username=$user&password=$passwd&redirect=.%2Fsearch.php%3Fsearch_id%3Dnewposts&sid=$sid&login=Přihlásit+se".getBytes(StandardCharsets.UTF_8)
+    conn.setRequestProperty( "Content-Length", Integer.toString(message.length));
+    conn.setUseCaches(false);
+    OutputStream os = conn.getOutputStream()
+    os.write(message)
+    os.flush()
+    os.close()
+
+    t = conn.getInputStream().getText().replaceAll(/<[^><]+>/,'')
+
+    assert t.contains("Byli jste úspěšně přihlášeni")
+
+    return conn.getHeaderField("Set-Cookie")
 }
 

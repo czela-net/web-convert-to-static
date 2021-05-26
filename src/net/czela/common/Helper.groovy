@@ -91,7 +91,7 @@ class Helper {
     }
 
     static def nvl(def a, def b) {
-        (a?.toString()?.trim().length() > 0)?a:b
+        (a?.toString()?.trim()?.length() > 0)?a:b
     }
 
     def static toTS(String date) {
