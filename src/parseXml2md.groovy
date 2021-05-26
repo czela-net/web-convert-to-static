@@ -36,7 +36,7 @@ def parseXml(File source, def parser) {
 			def postTitle = row.post_subject.text()
 			def authorName = row.user_fullname.a.text()
 			def authorAvatar = row.user_avatar.img.'@src'.text()
-			def postDate = toTS(row.post_date.text()) // TODO format stř 02. črc 2014 11:23:21
+			def postDate = toTS(row.post_date.text())
 			def postHtmlMessage = row.post_message.text()
 			def postReputation = nvl(row.post_reputation.text(), 0)
 			def authorPostsCounter = nvl(row.poster_posts.text(), 0)
