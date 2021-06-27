@@ -2,6 +2,7 @@
 *.properties
 00/
 czela-forum/static/download/
+czela-forum/public/
 out/
 /exportPHPBB2md.sh
 /exportPHPBB2xml.sh
